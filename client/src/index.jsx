@@ -14,6 +14,15 @@ class App extends React.Component {
 
   }
 
+  componentWillMount() {
+    axios.get('/repos')
+      .then(results => {
+        this.setState({ repos: results.data.results });
+
+      })
+      .catch(err => console.log('this is a nono: ', err))
+  }
+
   search(term) {
     console.log(`${term} was searched`);
     // TODO
@@ -26,8 +35,8 @@ class App extends React.Component {
   render() {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos} />
       <Search onSearch={this.search.bind(this)} />
+      <RepoList repos={this.state.repos} />
     </div>)
   }
 }
